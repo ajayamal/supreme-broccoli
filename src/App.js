@@ -28,9 +28,9 @@ function App() {
   return (
     <div className="App">
       <div class="bg-animation z-0">
-        <div id="stars"></div>
-        <div id="stars2"></div>
-        <div id="stars3"></div>
+        {/* <div id="stars"></div> */}
+        {/* <div id="stars2"></div>
+        <div id="stars3"></div> */}
         <div id="stars4"></div>
       </div>
       <div className="relative z-10">
