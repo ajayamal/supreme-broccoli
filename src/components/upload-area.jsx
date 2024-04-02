@@ -1,39 +1,51 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { fileFormats } from "../utils/constants";
 
 export const UploadArea = ({ setFile }) => {
   const inputFileRef = useRef(null);
+  const [isValidFile, setIsValidFile] = useState(true);
   function overrideEventDefaults(event) {
     event.preventDefault();
     event.stopPropagation();
   }
   function handleDrop(ev) {
     overrideEventDefaults(ev);
-    // Prevent default behavior (Prevent file from being opened)
     if (ev.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
       [...ev.dataTransfer.items].forEach((item, i) => {
-        // If dropped items aren't files, reject them
-        if (item.kind === "file") {
+        setIsValidFile(true);
+        if (item.kind === "file" && fileFormats.includes(item.type)) {
           const file = item.getAsFile();
           setFile(file);
         }
       });
     } else {
-      // Use DataTransfer interface to access the file(s)
       [...ev.dataTransfer.files].forEach((file, i) => {
         setFile(file);
       });
     }
   }
-  function handleDragOver(e) {
-    overrideEventDefaults(e);
+  function handleDragOver(ev) {
+    overrideEventDefaults(ev);
+    if (ev.dataTransfer.items) {
+      [...ev.dataTransfer.items].forEach((item, i) => {
+        setIsValidFile(fileFormats.includes(item.type));
+      });
+    } else {
+      console.log("Log");
+    }
   }
   return (
     <div
       id="drop_zone"
       onDrop={(event) => handleDrop(event)}
       onDragOver={(e) => handleDragOver(e)}
-      className="border-dashed border-cyan-700 bg-cyan-400 max-h-96 min-h-60 text-center flex justify-center items-center border-spacing-2 border-4 m-6 cursor-pointer"
+      onDragLeave={() => setIsValidFile(true)}
+      onDragEnd={() => setIsValidFile(true)}
+      className={`border-dashed  ${
+        isValidFile
+          ? `bg-gray-400 border-gray-700`
+          : `bg-red-400 border-red-900`
+      } max-h-96 min-h-60 text-center flex justify-center items-center border-spacing-2 border-4 m-6 cursor-pointer`}
       onClick={() => {
         inputFileRef.current.click();
       }}
@@ -42,12 +54,15 @@ export const UploadArea = ({ setFile }) => {
         type="file"
         ref={inputFileRef}
         className="hidden"
+        accept={fileFormats.join("")}
         onChange={(e) => {
           if (!e.target.files.length) return;
           setFile(e.target.files[0]);
         }}
       />
-      <div>Upload your file here</div>
+      <div className="text-lg text-gray-900 font-semibold">
+        Click or drag your file here to upload
+      </div>
     </div>
   );
 };

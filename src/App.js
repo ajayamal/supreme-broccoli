@@ -23,24 +23,37 @@ function App() {
   useEffect(() => {
     console.log(selectedFile);
   }, [selectedFile]);
+
   return (
     <div className="App">
-      <div>
-        <UploadArea setFile={setSelectedFile} />
-
-        <div className="flex flex-col items-center justify-center p-6">
-          {selectedFile ? <FileDetails file={selectedFile} /> : <></>}
-          <button
-            className={`rounded-md ${
-              selectedFile ? `bg-cyan-700` : `bg-gray-300 cursor-not-allowed`
-            } p-3 text-white font-semibold`}
-            onClick={() => parseXl()}
-          >
-            {!selectedFile ? "Please upload" : "Ready to Extract"}
-          </button>
-        </div>
+      <div class="bg-animation z-0">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="stars4"></div>
       </div>
-      {parsedData ? JSON.stringify(parsedData) : ""}
+      <div className="relative z-10">
+        <div className="p-8 text-3xl font-bold text-gray-400">
+          {" "}
+          Supreme Broccoli
+        </div>
+        <div>
+          <UploadArea setFile={setSelectedFile} />
+
+          <div className="flex flex-col items-center justify-center p-6">
+            {selectedFile ? <FileDetails file={selectedFile} /> : <></>}
+            <button
+              className={`rounded-md ${
+                selectedFile ? `bg-cyan-700` : `bg-gray-300 cursor-not-allowed`
+              } p-3 text-white font-semibold`}
+              onClick={() => parseXl()}
+            >
+              {!selectedFile ? "Please upload" : "Ready to Extract"}
+            </button>
+          </div>
+        </div>
+        {parsedData ? JSON.stringify(parsedData) : ""}
+      </div>
     </div>
   );
 }
