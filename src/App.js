@@ -53,11 +53,7 @@ function App() {
             </button>
           </div>
         </div>
-        {parsedData ? (
-          <DocEditor formattedDoc={JSON.stringify(parsedData)} />
-        ) : (
-          ""
-        )}
+        {parsedData ? <DocEditor formattedDoc={parsedData} /> : ""}
       </div>
     </div>
   );
