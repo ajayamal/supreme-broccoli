@@ -54,7 +54,7 @@ export const UploadArea = ({ setFile }) => {
         type="file"
         ref={inputFileRef}
         className="hidden"
-        accept={fileFormats.join("")}
+        accept={fileFormats.join(",")}
         onChange={(e) => {
           if (!e.target.files.length) return;
           setFile(e.target.files[0]);
