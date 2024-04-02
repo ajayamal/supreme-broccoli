@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { read, utils } from "xlsx";
 import { UploadArea } from "./components/upload-area";
 import { FileDetails } from "./components/file-details";
+import { DocEditor } from "./components/doc-editor";
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -52,7 +53,11 @@ function App() {
             </button>
           </div>
         </div>
-        {parsedData ? JSON.stringify(parsedData) : ""}
+        {parsedData ? (
+          <DocEditor formattedDoc={JSON.stringify(parsedData)} />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
