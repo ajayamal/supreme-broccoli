@@ -5,6 +5,7 @@ import { read, utils } from "xlsx";
 import { UploadArea } from "./components/upload-area";
 import { FileDetails } from "./components/file-details";
 import { DocEditor } from "./components/doc-editor";
+import { convertJsonToText } from "./utils/common-func";
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,9 +22,11 @@ function App() {
     const data = utils.sheet_to_json(ws); // generate objects
     setParsedData(data);
   }
-  useEffect(() => {
-    console.log(selectedFile);
-  }, [selectedFile]);
+
+  function reset() {
+    setParsedData("");
+    setSelectedFile("");
+  }
 
   return (
     <div className="App">
@@ -43,17 +46,36 @@ function App() {
 
           <div className="flex flex-col items-center justify-center p-6">
             {selectedFile ? <FileDetails file={selectedFile} /> : <></>}
-            <button
-              className={`rounded-md ${
-                selectedFile ? `bg-cyan-700` : `bg-gray-300 cursor-not-allowed`
-              } p-3 text-white font-semibold`}
-              onClick={() => parseXl()}
-            >
-              {!selectedFile ? "Please upload" : "Ready to Extract"}
-            </button>
+            <div className="flex space-x-4">
+              {" "}
+              <button
+                className={`rounded-md ${
+                  selectedFile
+                    ? `bg-cyan-700`
+                    : `bg-gray-300 cursor-not-allowed`
+                } p-3 text-white font-semibold`}
+                onClick={() => parseXl()}
+              >
+                {!selectedFile ? "Please upload" : "Ready to Extract"}
+              </button>
+              <button
+                className={`rounded-md ${
+                  selectedFile
+                    ? `bg-cyan-700`
+                    : `bg-gray-300 cursor-not-allowed`
+                } p-3 text-white font-semibold`}
+                onClick={() => reset()}
+              >
+                {"Reset"}
+              </button>
+            </div>
           </div>
         </div>
-        {parsedData ? <DocEditor formattedDoc={parsedData} /> : ""}
+        {parsedData ? (
+          <DocEditor formattedDoc={convertJsonToText(parsedData)} />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

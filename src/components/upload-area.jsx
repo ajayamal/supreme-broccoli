@@ -31,9 +31,9 @@ export const UploadArea = ({ setFile }) => {
         setIsValidFile(fileFormats.includes(item.type));
       });
     } else {
-      console.log("Log");
     }
   }
+
   return (
     <div
       id="drop_zone"
@@ -58,6 +58,7 @@ export const UploadArea = ({ setFile }) => {
         onChange={(e) => {
           if (!e.target.files.length) return;
           setFile(e.target.files[0]);
+          e.target.value = null;
         }}
       />
       <div className="text-lg text-gray-900 font-semibold">

@@ -7,3 +7,11 @@ export const trimFileName = (initial) => {
   fileName = fileName.substring(0, 10);
   return fileName + "." + extension;
 };
+
+export const convertJsonToText = (parsedData) => {
+  console.log(parsedData);
+  return parsedData.map(
+    (parsedDatum) =>
+      `I'm **${parsedDatum["First Name"]}**  ${parsedDatum["Last Name"]}`
+  );
+};
