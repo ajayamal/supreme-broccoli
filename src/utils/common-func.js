@@ -12,6 +12,19 @@ export const convertJsonToText = (parsedData) => {
   console.log(parsedData);
   return parsedData.map(
     (parsedDatum) =>
-      `I'm **${parsedDatum["First Name"]}**  ${parsedDatum["Last Name"]}`
+      `**${parsedDatum["Planned start date"]}**  ${
+        parsedDatum["Requesting Group"]
+      }:
+      \t\t ${parsedDatum["Requesting Group"]} \n
+      
+      \t${
+        parsedDatum["Type"] == "FSC"
+          ? parsedDatum["Number_1"]
+          : parsedDatum["Number"]
+      }:${
+        parsedDatum["Type"] == "FSC"
+          ? parsedDatum["Description_1"]
+          : parsedDatum["Short description"]
+      }`
   );
 };
